@@ -101,7 +101,8 @@ class HashTable:
         """
         # Your code here
         slot = self.hash_index(key)
-        self.data[slot] = value
+        # self.data[slot] = value
+        self.data[slot] = HashTableEntry(key, value)
 
 
     def delete(self, key):
@@ -128,8 +129,8 @@ class HashTable:
         hash_entry = self.data[slot]
 
         if hash_entry is not None:
-            # return hash_entry.value
-            return hash_entry
+            return hash_entry.value
+            # return hash_entry
 
         return None
 
