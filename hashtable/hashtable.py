@@ -100,7 +100,9 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        
+        slot = self.hash_index(key)
+        self.data[slot] = value
+
 
     def delete(self, key):
         """
@@ -111,7 +113,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        return self.put(key, None)
 
     def get(self, key):
         """
@@ -145,10 +147,16 @@ class HashTable:
 if __name__ == "__main__":
     ht = HashTable(8)
     # print(ht.get_num_slots("arash"))
-    print(ht.fnv1("arash"))
-    print(ht.djb2("arash"))
-    print(ht.hash_index("arash"))
-    print(ht.get_num_slots())
+    # print(ht.fnv1("arash"))
+    # print(ht.djb2("arash"))
+    # print(ht.hash_index("arash"))
+    # print(ht.get_num_slots())
+
+    ht.put("ammon", 7)
+    ht.put("arash", 33)
+    ht.delete("ammon")
+    print(ht.get("ammon"))
+    print(ht.get("arash"))
 
     # ht.put("line_1", "'Twas brillig, and the slithy toves")
     # ht.put("line_2", "Did gyre and gimble in the wabe:")
