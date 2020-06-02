@@ -6,10 +6,14 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
+    def __repr__(self):
+        return f'HashTableEntry({repr(self.value)})'
 
 
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
+
+
 
 
 class HashTable:
@@ -23,7 +27,8 @@ class HashTable:
     def __init__(self, capacity):
         # Your code here
         self.capacity = capacity
-        # self.data = [None]
+        self.itemCount = 0 
+        self.data = [None]
         if self.capacity <= MIN_CAPACITY:
             self.data = [None] * MIN_CAPACITY
            
@@ -98,11 +103,33 @@ class HashTable:
         Hash collisions should be handled with Linked List Chaining.
 
         Implement this.
+
+        If the value is None we need to input a linked list with a node that has the key value pair in that list.
+
         """
         # Your code here
         slot = self.hash_index(key)
-        # self.data[slot] = value
-        self.data[slot] = HashTableEntry(key, value)
+        
+        node = HashTableEntry(key, value)
+        # # self.data[slot] = value
+        # self.data[slot] = HashTableEntry(key, value)
+        if self.data[slot] is None:
+            self.data[slot] = HashTableEntry(key, value)
+        else:
+            currNode = self.storage[hash_entry]
+
+            while currNode.key != key and currNode.next:
+                currNode =currNode.next
+
+            if currNode.key = key:
+                currNode.value = value
+
+            else:
+                currNode.next = HashTableEntry(key, value)
+                self.itemCount += 1
+
+        if self.get_load_fatct() > 0.7:
+            self.resize(self.capacity * 2)  
 
 
     def delete(self, key):
@@ -114,7 +141,32 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        return self.put(key, None)
+    index = self.hash_index(key)
+    currNode = self.data[index]
+
+    if not currNode:
+        print("key not found.")
+    
+    elif currNode.next is None:
+        self.data[index] = None
+        self.itemCount -= 1
+    
+    else: 
+        prevNode = None
+        while currNode.key != key and currNode.next:
+            preNode = currNode
+            currNode = currNode.next
+        
+        if currNode.next is None: 
+            prevNode.next = None
+            self.itemCount -= 1
+        
+        else:
+            prevNode.next = currNode.next
+            self.itemCount -= 1
+    
+    if self.get_load_factor() < .2:
+        self.resize(min(self.capacity // 2, MIN_CAPACITY))
 
     def get(self, key):
         """
@@ -129,8 +181,8 @@ class HashTable:
         hash_entry = self.data[slot]
 
         if hash_entry is not None:
-            return hash_entry.value
-            # return hash_entry
+            # return hash_entry.value
+            return hash_entry
 
         return None
 
@@ -142,41 +194,50 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        old_storage =- self.storage
+        self.capcity = new_capacity
+        self.starage = [None] * new_capacity
+        for item in old_storage:
+            if item:
+                currNode = item
+                while currNode:
+                    self.put(currNode.key, currNode.value)
+                    currNode = currNode.next
 
 
 if __name__ == "__main__":
-    ht = HashTable(8)
+    ht = HashTable(13)
     # print(ht.get_num_slots("arash"))
     # print(ht.fnv1("arash"))
     # print(ht.djb2("arash"))
     # print(ht.hash_index("arash"))
     # print(ht.get_num_slots())
 
-    ht.put("ammon", 7)
-    ht.put("arash", 33)
-    ht.delete("ammon")
-    print(ht.get("ammon"))
-    print(ht.get("arash"))
+    # ht.put("ammon", 7)
+    # ht.put("arash", 33)
+    # ht.delete("ammon")
+    # print(ht.get("ammon"))
+    # print(ht.get("arash"))
 
-    # ht.put("line_1", "'Twas brillig, and the slithy toves")
-    # ht.put("line_2", "Did gyre and gimble in the wabe:")
-    # ht.put("line_3", "All mimsy were the borogoves,")
-    # ht.put("line_4", "And the mome raths outgrabe.")
-    # ht.put("line_5", '"Beware the Jabberwock, my son!')
-    # ht.put("line_6", "The jaws that bite, the claws that catch!")
-    # ht.put("line_7", "Beware the Jubjub bird, and shun")
-    # ht.put("line_8", 'The frumious Bandersnatch!"')
-    # ht.put("line_9", "He took his vorpal sword in hand;")
-    # ht.put("line_10", "Long time the manxome foe he sought--")
-    # ht.put("line_11", "So rested he by the Tumtum tree")
-    # ht.put("line_12", "And stood awhile in thought.")
+    ht.put("line_1", "'Twas brillig, and the slithy toves")
+    ht.put("line_2", "Did gyre and gimble in the wabe:")
+    ht.put("line_3", "All mimsy were the borogoves,")
+    ht.put("line_4", "And the mome raths outgrabe.")
+    ht.put("line_5", '"Beware the Jabberwock, my son!')
+    ht.put("line_6", "The jaws that bite, the claws that catch!")
+    ht.put("line_7", "Beware the Jubjub bird, and shun")
+    ht.put("line_8", 'The frumious Bandersnatch!"')
+    ht.put("line_9", "He took his vorpal sword in hand;")
+    ht.put("line_10", "Long time the manxome foe he sought--")
+    ht.put("line_11", "So rested he by the Tumtum tree")
+    ht.put("line_12", "And stood awhile in thought.")
 
-    # print("")
+    print("")
+    # print()
 
-    # # Test storing beyond capacity
-    # for i in range(1, 13):
-    #     print(ht.get(f"line_{i}"))
+    # Test storing beyond capacity
+    for i in range(1, 13):
+        print(ht.get(f"line_{i}"))
 
     # # Test resizing
     # old_capacity = ht.get_num_slots()
