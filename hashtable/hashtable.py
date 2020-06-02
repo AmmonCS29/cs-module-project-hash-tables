@@ -165,8 +165,8 @@ class HashTable:
                 prevNode.next = currNode.next
                 self.itemCount -= 1
         
-        # if self.get_load_factor() < .2:
-        #     self.resize(min(self.capacity // 2, MIN_CAPACITY))
+        if self.get_load_factor() < .2:
+            self.resize(max(self.capacity // 2, MIN_CAPACITY))
 
     def get(self, key):
         """
