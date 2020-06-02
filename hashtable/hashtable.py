@@ -57,7 +57,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        load = self.itemCount / self.capacity
+        return load
 
     def fnv1(self, key):
         """
@@ -110,25 +111,24 @@ class HashTable:
         # Your code here
         slot = self.hash_index(key)
         
-        node = HashTableEntry(key, value)
         # # self.data[slot] = value
         # self.data[slot] = HashTableEntry(key, value)
         if self.data[slot] is None:
             self.data[slot] = HashTableEntry(key, value)
         else:
-            currNode = self.storage[hash_entry]
+            currNode = self.data[slot]
 
             while currNode.key != key and currNode.next:
-                currNode =currNode.next
+                currNode = currNode.next
 
-            if currNode.key = key:
+            if currNode.key == key:
                 currNode.value = value
 
             else:
                 currNode.next = HashTableEntry(key, value)
                 self.itemCount += 1
 
-        if self.get_load_fatct() > 0.7:
+        if self.get_load_factor() > 0.7:
             self.resize(self.capacity * 2)  
 
 
@@ -141,32 +141,32 @@ class HashTable:
         Implement this.
         """
         # Your code here
-    index = self.hash_index(key)
-    currNode = self.data[index]
+        index = self.hash_index(key)
+        currNode = self.data[index]
 
-    if not currNode:
-        print("key not found.")
-    
-    elif currNode.next is None:
-        self.data[index] = None
-        self.itemCount -= 1
-    
-    else: 
-        prevNode = None
-        while currNode.key != key and currNode.next:
-            preNode = currNode
-            currNode = currNode.next
+        if not currNode:
+            print("key not found.")
         
-        if currNode.next is None: 
-            prevNode.next = None
+        elif not currNode.next:
+            self.data[index] = None
             self.itemCount -= 1
         
-        else:
-            prevNode.next = currNode.next
-            self.itemCount -= 1
-    
-    if self.get_load_factor() < .2:
-        self.resize(min(self.capacity // 2, MIN_CAPACITY))
+        else: 
+            prevNode = None
+            while currNode.key != key and currNode.next:
+                prevNode = currNode
+                currNode = currNode.next
+            
+            if not currNode.next: 
+                prevNode.next = None
+                self.itemCount -= 1
+            
+            else:
+                prevNode.next = currNode.next
+                self.itemCount -= 1
+        
+        # if self.get_load_factor() < .2:
+        #     self.resize(min(self.capacity // 2, MIN_CAPACITY))
 
     def get(self, key):
         """
@@ -180,12 +180,28 @@ class HashTable:
         slot = self.hash_index(key)
         hash_entry = self.data[slot]
 
-        if hash_entry is not None:
-            # return hash_entry.value
-            return hash_entry
+        # if hash_entry.key == key:
+        #     return hash_entry.value
 
-        return None
+        # while hash_entry.next:
+        #     if hash_entry.key == key:
+        #         return hash_entry.value
+        #     else:
+        #         hash_entry = hash_entry.next 
 
+        # return None
+        if self.data[slot]:
+            hash_entry = self.data[slot]
+
+            while hash_entry.key != key and hash_entry.next:
+                hash_entry = hash_entry.next
+            
+            if hash_entry.next is None:
+                return hash_entry.value
+            else: 
+                return hash_entry.value
+        else:
+            return None
     def resize(self, new_capacity):
         """
         Changes the capacity of the hash table and
@@ -194,9 +210,9 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        old_storage =- self.storage
+        old_storage = self.data
         self.capcity = new_capacity
-        self.starage = [None] * new_capacity
+        self.data = [None] * new_capacity
         for item in old_storage:
             if item:
                 currNode = item
@@ -212,6 +228,7 @@ if __name__ == "__main__":
     # print(ht.djb2("arash"))
     # print(ht.hash_index("arash"))
     # print(ht.get_num_slots())
+    ht.put("work", "stupid thing yhour mom")
 
     # ht.put("ammon", 7)
     # ht.put("arash", 33)
@@ -233,7 +250,8 @@ if __name__ == "__main__":
     ht.put("line_12", "And stood awhile in thought.")
 
     print("")
-    # print()
+    print(ht.get("work"))
+    print(ht.get("line_11"))
 
     # Test storing beyond capacity
     for i in range(1, 13):
