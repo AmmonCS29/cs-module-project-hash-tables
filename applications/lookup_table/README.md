@@ -13,3 +13,20 @@ finish running in under a minute.
 
 There's no test file for this. It's counting to 50,000, so if it
 finishes before you give up, then you're golden.
+
+
+## Understanding
+
+Caching expensive operations in a look up table speeds up future queries. 
+
+Build a table in advance by iterating over all the values in the domain of the function and record he results. Or do it as you go while looking up the values. 
+
+## Planning
+import math
+
+Create a look_up_table dictionary. 
+
+create a function called slowfun
+    iterate over a table of a range of 1000
+    find the index in the table and assign it the factorial of the number. 
+
