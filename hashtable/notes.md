@@ -1,4 +1,4 @@
-# UPER
+# UPER for the Hash Tables assignments
 
 ## Understanding:
  - OVerall Objective: implement a hash table that does not account for collision. 

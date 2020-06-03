@@ -1,7 +1,7 @@
 def word_count(s):
     # Your code here
     counts = {}
-    punctuations =  '" : ; , . - + = / \ | [ ] { } ( ) * ^ & " '
+    punctuations =  ' : ; , . - + = / \ | [ ] { } ( ) * ^ & " '
     
     
     for x in s: 
