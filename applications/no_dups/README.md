@@ -24,3 +24,6 @@ split string into a list
 turn list into a set
 turn back into a list. 
 
+scratch that ^
+
+utilize a dictionary some how. 
