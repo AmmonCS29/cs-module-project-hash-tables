@@ -1,5 +1,5 @@
 # Your code here
-from timer import Timer
+
 import math
 import random
 

@@ -27,3 +27,18 @@ ghcyr.
 
 (That's encrypted with ROT13--Google `rot13 decoder` to decode it if you
 want the hint.)
+
+## Understand
+
+expensive sequence that is similar to fibinanccis but it is a lot more expensive and less useful. 
+
+it takes in three arguments `x`, `y`, `z` and these are all greater than 0 and can as large as 800. 
+
+Objective: recreate expensive function and use a hastable to speed up the process. 
+
+This similar to the fibinacci one we did in class. 
+
+## Planning. 
+
+creat a hash table call it cache. 
+if x is 

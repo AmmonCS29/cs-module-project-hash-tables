@@ -29,3 +29,20 @@ Ignore each of the following characters:
 ```
 
 If the input contains no ignored characters, return an empty dictionary.
+
+
+## Understanding
+
+Takes in a string of words. 
+
+ouputs a dictionary of words as the key and the count as the value. 
+
+case should be ignored and outputs are lowercase. 
+
+## Planning
+
+create empty dictionary called count
+remove the punctation from the string and create a new string 
+Then split the new string into another string. 
+Then input the keys into a dictionary and the values as the count. 
+iterate over the string 
